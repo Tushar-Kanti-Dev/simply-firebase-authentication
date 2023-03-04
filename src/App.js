@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import app from './firebase.init';
+import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
+
+
+const auth = getAuth(app)
 function App() {
+  const provider = new GoogleAuthProvider();
+
+  const handelAddGoogle =() =>{
+    signInWithPopup(auth ,provider)
+    .then(result =>{
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(error =>{
+      console.log('working');
+    })
+
+  }
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Used firebase in this project</h2>
+      <button onClick={handelAddGoogle}>Google Sign In</button>
     </div>
   );
 }
